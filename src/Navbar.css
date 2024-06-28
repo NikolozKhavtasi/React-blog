@@ -6,3 +6,7 @@
 .fade-out:hover {
   opacity: 1;
 }
+
+.navbar {
+  margin-bottom: 20px;
+}

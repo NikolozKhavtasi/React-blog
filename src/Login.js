@@ -1,56 +1,64 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
-import { login } from './api';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
-const Login = () => {
+const Login = ({ setAuth }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await login(email, password);
-      setMessage('Login successful!');
-      console.log('Login data:', data);
+      const response = await axios.post('https://apitest.reachstar.io/signin', { email, password });
+      const token = response.data.token;
+      setAuth(token);
+      localStorage.setItem('authToken', token);
+      navigate('/');
     } catch (error) {
-      setError('Login failed. Try again.');
-      console.error('Login error:', error);
+      console.error('Login failed:', error);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2>Login</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-
-        {error && <div className="text-danger">{error}</div>}
-        {message && <div className="text-success">{message}</div>}
-
-        <Button variant="primary" type="submit">
-          Submit
-        </Button>
-      </Form>
+    <div className="login-container">
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6">
+            <div className="card">
+              <div className="card-body">
+                <h2 className="card-title text-center">Login</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary w-100">Login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

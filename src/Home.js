@@ -17,10 +17,11 @@ const blogPosts = [
     excerpt: 'Part text',
     fullText: 'Full text'
   },
-  // 3,4,5
 ];
 
 const Home = () => {
+  const isAuthenticated = !!localStorage.getItem('authToken');
+
   return (
     <div className="home-container">
       <div className="teal-box">
@@ -28,16 +29,20 @@ const Home = () => {
       </div>
       <div className="centered-container">
         <h2 className="blog-title">Blog</h2>
-        {blogPosts.map((post) => (
-          <div key={post.id} className="blog-post">
-            <h3 className="blog-post-title">{post.title}</h3>
-            <p className="blog-post-author">By {post.author}</p>
-            <p className="blog-post-excerpt">{post.excerpt}</p>
-            <Link to={`/detail/${post.id}`}>
-              <button className="blog-post-button">Read on</button>
-            </Link>
-          </div>
-        ))}
+        {isAuthenticated ? (
+          blogPosts.map((post) => (
+            <div key={post.id} className="blog-post">
+              <h3 className="blog-post-title">{post.title}</h3>
+              <p className="blog-post-author">By {post.author}</p>
+              <p className="blog-post-excerpt">{post.excerpt}</p>
+              <Link to={`/detail/${post.id}`}>
+                <button className="blog-post-button">Read on</button>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>Log in to see blog posts.</p>
+        )}
       </div>
     </div>
   );

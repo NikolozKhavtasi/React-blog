@@ -46,7 +46,7 @@
   transition: text-shadow 0.3s ease, color 0.3s ease;
   cursor: pointer;
   text-align: left;
-  font-style: italic;
+  font-style: italicl;
 }
 
 .blog-title:hover {
