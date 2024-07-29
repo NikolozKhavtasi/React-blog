@@ -1,12 +1,30 @@
-.fade-out {
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
+.custom-navbar .navbar-brand {
+  color: #f8f9fa;
+  margin-left: 20px;
+  transition: color 0.3s, transform 0.3s;
 }
 
-.fade-out:hover {
-  opacity: 1;
+.custom-navbar .navbar-brand:hover {
+  color: #adb5bd;
+  transform: scale(1.1);
 }
 
-.navbar {
-  margin-bottom: 20px;
+.custom-navbar .nav-link {
+  color: #adb5bd;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #f8f9fa;
+  transform: scale(1.1);
+}
+
+.custom-navbar .nav-link.active {
+  color: #f8f9fa;
+  font-weight: bold;
+}
+
+html, body {
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
